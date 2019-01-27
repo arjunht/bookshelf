@@ -6,16 +6,18 @@ const Shelf = (props) => {
   return (
     <div className="bookshelf">
       <h2 className="bookshelf-title">{props.title}</h2>
-      <div className="bookshelf-books">
-        <BookList books={props.books} />
-      </div>
+      {(props.books !== undefined && props.books.length > 0) && (
+        <div className="bookshelf-books">
+          <BookList books={props.books} />
+        </div>
+      )}
     </div>
   );
 };
 
 Shelf.propTypes = {
   title: PropTypes.string.isRequired,
-  books: PropTypes.array.isRequired
+  books: PropTypes.array
 }
 
 export default Shelf

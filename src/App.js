@@ -25,13 +25,16 @@ class BooksApp extends React.Component {
       However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
       you don't find a specific author or title. Every search is limited by search terms.
     */
-    
-    BooksAPI.search(searchText, 20)
-      .then((books) => {
-        this.setState({
-          books
-        })
-      })
+    searchText ? (
+      BooksAPI.search(searchText, 20)
+        .then((books) => {
+          this.setState({
+            books
+          })
+        }))
+    : (this.setState({
+        books: []
+      }))
   }
 
   render() {
@@ -39,7 +42,9 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         {this.state.showSearchPage ? (
-          <AddBook books={this.state.books} onSearchBook={this.searchBook} />
+          <AddBook
+            books={this.state.books}
+            onSearchBook={this.searchBook} />
         ) : (
           <div className="list-books">
             <div className="list-books-title">
@@ -48,7 +53,13 @@ class BooksApp extends React.Component {
             <div className="list-books-content">
               <div>
                 {bookShelfTitles.map((value, index) => (
-                  <Shelf key={index} title={value} books={this.state.books} />
+                  <Shelf
+                    key={index}
+                    title={value}
+                    books={
+                      this.state.books.filter(book => 
+                        book.shelf === value
+                  )}/>
                 ))}
               </div>
             </div>

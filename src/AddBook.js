@@ -5,7 +5,7 @@ import BookList from './BookList'
 class AddBook extends Component {
   
   static propTypes = {
-    books: PropTypes.array.isRequired,
+    books: PropTypes.array,
     onSearchBook: PropTypes.func.isRequired
   }
   
@@ -35,9 +35,11 @@ class AddBook extends Component {
             />
           </div>
         </div>
-        <div className="search-books-results">
-          <BookList books={this.props.books}/>
-        </div>
+        {(this.props.books !== undefined && this.props.books.length > 0) && (
+          <div className="search-books-results">
+            <BookList books={this.props.books}/>
+          </div>
+        )}
       </div>
     );
   }
