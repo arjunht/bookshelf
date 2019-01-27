@@ -6,7 +6,7 @@ const BookList = (props) => {
   return (
     <ol className="books-grid">
       {props.books.map((book) => (
-        <Book key={book.id} title={book.title} authors={book.authors} />
+        <Book key={book.id} book={book} />
       ))}
     </ol>
   );
