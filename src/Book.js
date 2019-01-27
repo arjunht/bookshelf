@@ -7,7 +7,7 @@ const Book = (props) => {
     <li>
       <div className="book">
         <div className="book-top">
-          <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: `url(${props.book.imageLinks.smallThumbnail})` }}></div>
+          <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: `url(${props.book.imageLinks.thumbnail})` }}></div>
           <ChangeShelf book={props.book} />
         </div>
         <div className="book-title">{props.book.title}</div>
