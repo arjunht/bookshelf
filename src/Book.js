@@ -8,7 +8,7 @@ const Book = (props) => {
       <div className="book">
         <div className="book-top">
           <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: `url(${props.book.imageLinks.thumbnail})` }}></div>
-          <ChangeShelf book={props.book} />
+          <ChangeShelf book={props.book} onUpdateShelf={(book, readState) => (props.onUpdateShelf(book, readState))} />
         </div>
         <div className="book-title">{props.book.title}</div>
         {(props.book.authors !== undefined && props.book.authors.length > 0) && (

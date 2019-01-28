@@ -23,8 +23,8 @@ class AddBook extends Component {
       However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
       you don't find a specific author or title. Every search is limited by search terms.
     */
-    this.state.searchText !== '' ? (
-      BooksAPI.search(this.state.searchText, 20)
+    event.target.value !== '' ? (
+      BooksAPI.search(event.target.value, 20)
         .then((books) => {
           this.setState({
             books
@@ -32,10 +32,20 @@ class AddBook extends Component {
         }))
     : (this.setState({
         books: []
-      }))
+    }))
   }
 
   render() {
+    
+    for(let book of this.state.books) {
+      for(let currentBook of this.props.currentBooks) {
+        if(book.id === currentBook.id) {
+          book.shelf = currentBook.shelf
+          break;
+        }
+      }
+    }
+    
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -51,7 +61,7 @@ class AddBook extends Component {
         </div>
         {(this.state.books !== undefined && this.state.books.length > 0) && (
           <div className="search-books-results">
-            <BookList books={this.state.books}/>
+            <BookList books={this.state.books} onUpdateShelf={(book, readState) => (this.props.onUpdateShelf(book, readState))}/>
           </div>
         )}
       </div>

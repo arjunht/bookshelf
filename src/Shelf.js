@@ -8,7 +8,7 @@ const Shelf = (props) => {
       <h2 className="bookshelf-title">{props.title}</h2>
       {(props.books !== undefined && props.books.length > 0) && (
         <div className="bookshelf-books">
-          <BookList books={props.books} />
+          <BookList books={props.books} onUpdateShelf={(book, readState) => (props.onUpdateShelf(book, readState))} />
         </div>
       )}
     </div>

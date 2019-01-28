@@ -19,11 +19,24 @@ class BooksApp extends React.Component {
       )
   }
 
+  updateShelf = (book, readState) => {
+    BooksAPI.update(book, readState);
+    
+    BooksAPI.getAll()
+      .then((books) => 
+        this.setState({
+          books
+        })
+      )
+  }
+
   render() {
     const bookShelfTitles = ['Currently Reading', 'Want to Read', 'Read']
     return (
       <div className="app">
-        <Route path='/addBook' component={AddBook} />
+        <Route path='/addBook' render={() => (
+          <AddBook currentBooks={this.state.books} onUpdateShelf={(book, readState) => this.updateShelf(book, readState)} />
+        )} />
         <Route exact path='/' render={() => (
           <div className="list-books">
             <div className="list-books-title">
@@ -38,7 +51,9 @@ class BooksApp extends React.Component {
                     books={
                       this.state.books.filter(book => 
                         book.shelf.toLowerCase() === value.replace(/\s/g, '').toLowerCase()
-                  )}/>
+                    )}
+                    onUpdateShelf={(book, readState) => (this.updateShelf(book, readState))}
+                  />
                 ))}
               </div>
             </div>

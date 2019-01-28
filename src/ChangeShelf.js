@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import * as BooksAPI from './BooksAPI'
 
 class ChangeShelf extends Component {
   state = {
-    value: this.props.book.shelf
+    value: (this.props.book.shelf ? this.props.book.shelf : "none")
   }
 
   updateShelf = (event) => {
@@ -12,7 +11,7 @@ class ChangeShelf extends Component {
       value: event.target.value
     })
     
-    BooksAPI.update(this.props.book, this.state.value)
+    this.props.onUpdateShelf(this.props.book, event.target.value);
   }
 
   render() {
