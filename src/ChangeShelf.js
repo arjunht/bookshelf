@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 class ChangeShelf extends Component {
   state = {
-    value: (this.props.book.shelf ? this.props.book.shelf : "none")
-  }
+    value: (this.props.book.shelf || "none")
+  };
 
   updateShelf = (event) => {
     
@@ -12,7 +12,7 @@ class ChangeShelf extends Component {
     })
     
     this.props.onUpdateShelf(this.props.book, event.target.value);
-  }
+  };
 
   render() {
     return (
@@ -29,4 +29,4 @@ class ChangeShelf extends Component {
   }
 }
 
-export default ChangeShelf
+export default ChangeShelf;

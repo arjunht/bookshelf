@@ -1,14 +1,14 @@
-import React, { Component } from 'react'
-import BookList from './BookList'
-import { Link } from 'react-router-dom'
-import * as BooksAPI from './BooksAPI'
+import React, { Component } from 'react';
+import BookList from './BookList';
+import { Link } from 'react-router-dom';
+import * as BooksAPI from './BooksAPI';
 
 class AddBook extends Component {
   
   state = {
     searchText: '',
     books: []
-  }
+  };
 
   searchBook = (event) => {    
     this.setState({
@@ -26,19 +26,31 @@ class AddBook extends Component {
     event.target.value !== '' ? (
       BooksAPI.search(event.target.value, 20)
         .then((books) => {
-          this.setState({
-            books
-          })
+          /*
+            For invalid queries, BooksAPI returns an object in books with the following format:
+            {error: "empty query", items: Array(0)}
+            Therefore added the check for Array and making sure there is atleast one book to display
+          */
+          Array.isArray(books) && books.length > 0 ?
+            this.setState({
+              books
+            })
+          : this.setState({
+              books: []
+            })
         }))
     : (this.setState({
         books: []
     }))
-  }
+  };
 
   render() {
     
-    for(let book of this.state.books) {
-      for(let currentBook of this.props.currentBooks) {
+    const { books, searchText } = this.state;
+    const { currentBooks, onUpdateShelf } = this.props
+    
+    for(let book of books) {
+      for(let currentBook of currentBooks) {
         if(book.id === currentBook.id) {
           book.shelf = currentBook.shelf
           break;
@@ -54,14 +66,14 @@ class AddBook extends Component {
             <input
               type="text"
               placeholder="Search by title or author"
-              value={this.state.searchText}
+              value={searchText}
               onChange={this.searchBook}
             />
           </div>
         </div>
-        {(this.state.books !== undefined && this.state.books.length > 0) && (
+        {(books !== undefined && books.length > 0) && (
           <div className="search-books-results">
-            <BookList books={this.state.books} onUpdateShelf={(book, readState) => (this.props.onUpdateShelf(book, readState))}/>
+            <BookList books={books} onUpdateShelf={(book, readState) => (onUpdateShelf(book, readState))}/>
           </div>
         )}
       </div>
@@ -69,4 +81,4 @@ class AddBook extends Component {
   }
 }
 
-export default AddBook
+export default AddBook;

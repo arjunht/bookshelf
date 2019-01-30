@@ -1,14 +1,14 @@
-import React from 'react'
-import * as BooksAPI from './BooksAPI'
-import './App.css'
-import AddBook from './AddBook'
-import Shelf from './Shelf'
-import { Link, Route } from 'react-router-dom'
+import React from 'react';
+import * as BooksAPI from './BooksAPI';
+import './App.css';
+import AddBook from './AddBook';
+import Shelf from './Shelf';
+import { Link, Route } from 'react-router-dom';
 
 class BooksApp extends React.Component {
   state = {
     books: []
-  }
+  };
 
   componentDidMount() {
     BooksAPI.getAll()
@@ -28,13 +28,13 @@ class BooksApp extends React.Component {
           books
         })
       )
-  }
+  };
 
   render() {
     const bookShelfTitles = ['Currently Reading', 'Want to Read', 'Read']
     return (
       <div className="app">
-        <Route path='/addBook' render={() => (
+        <Route path='/search' render={() => (
           <AddBook currentBooks={this.state.books} onUpdateShelf={(book, readState) => this.updateShelf(book, readState)} />
         )} />
         <Route exact path='/' render={() => (
@@ -58,13 +58,13 @@ class BooksApp extends React.Component {
               </div>
             </div>
             <div className="open-search">
-              <Link to='/addBook'>Add a book</Link>
+              <Link to='/search'>Add a book</Link>
             </div>
           </div>
         )} />
       </div>
-    )
+    );
   }
 }
 
-export default BooksApp
+export default BooksApp;

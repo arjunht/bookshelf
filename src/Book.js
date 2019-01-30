@@ -1,19 +1,21 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import ChangeShelf from './ChangeShelf'
+import React from 'react';
+import PropTypes from 'prop-types';
+import ChangeShelf from './ChangeShelf';
 
 const Book = (props) => {
+  const { book, onUpdateShelf } = props;
+  
   return (
     <li>
       <div className="book">
         <div className="book-top">
-          <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: `url(${props.book.imageLinks.thumbnail})` }}></div>
-          <ChangeShelf book={props.book} onUpdateShelf={(book, readState) => (props.onUpdateShelf(book, readState))} />
+          <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
+          <ChangeShelf book={book} onUpdateShelf={(book, readState) => (onUpdateShelf(book, readState))} />
         </div>
-        <div className="book-title">{props.book.title}</div>
-        {(props.book.authors !== undefined && props.book.authors.length > 0) && (
+        <div className="book-title">{book.title}</div>
+        {(book.authors !== undefined && book.authors.length > 0) && (
           <div className="book-authors">
-            {props.book.authors.map((author, index) => (
+            {book.authors.map((author, index) => (
               index > 0 ? `, ${author}` : author
             ))}
           </div>
@@ -27,4 +29,4 @@ Book.propTypes = {
   book: PropTypes.object.isRequired,
 };
 
-export default Book
+export default Book;
